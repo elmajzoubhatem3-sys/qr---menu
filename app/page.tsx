@@ -78,7 +78,11 @@ export default function Home() {
             <div className="menu-grid">
               {cat.items.map((item, i) => (
                 <article key={i} className="menu-card">
-                  <img src={item.image} alt={item.name} className="menu-card-image" />
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="menu-card-image"
+                  />
 
                   <div className="menu-card-body">
                     <div className="menu-card-top">
@@ -97,4 +101,3 @@ export default function Home() {
     </main>
   );
 }
-// update
