@@ -117,10 +117,27 @@ export function AdminPanel() {
     const formData = new FormData();
     formData.append("file", selectedFile);
 
+    async function uploadImage(selectedFile: File | null) {
+  if (!selectedFile) return "";
+
+  try {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
     const res = await fetch("/api/upload", {
       method: "POST",
       body: formData,
     });
+
+    if (!res.ok) return "";
+
+    const data = await res.json();
+    return data.url || "";
+
+  } catch {
+    return "";
+  }
+}
 
     const data = await res.json();
     return data.url || "";
