@@ -114,33 +114,27 @@ export function AdminPanel() {
   async function uploadImage(selectedFile: File | null) {
     if (!selectedFile) return "";
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
 
-    async function uploadImage(selectedFile: File | null) {
-  if (!selectedFile) return "";
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-  try {
-    const formData = new FormData();
-    formData.append("file", selectedFile);
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Upload failed:", text);
+        return "";
+      }
 
-    const res = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!res.ok) return "";
-
-    const data = await res.json();
-    return data.url || "";
-
-  } catch {
-    return "";
-  }
-}
-
-    const data = await res.json();
-    return data.url || "";
+      const data = await res.json();
+      return data.url || "";
+    } catch (error) {
+      console.error("Upload error:", error);
+      return "";
+    }
   }
 
   async function addProduct(e: React.FormEvent<HTMLFormElement>) {
