@@ -130,7 +130,10 @@ export function AdminPanel() {
     e.preventDefault();
     setLoading(true);
 
-    const imageUrl = await uploadImage(file);
+    let imageUrl = "";
+    if (file) {
+      imageUrl = await uploadImage(file);
+    }
 
     await fetch("/api/products", {
       method: "POST",
