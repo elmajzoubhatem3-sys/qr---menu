@@ -1,28 +1,38 @@
 import { NextResponse } from "next/server";
-
-let categories = [
-  { id: 1, name: "Burgers", sort_order: 0 },
-  { id: 2, name: "Pizza", sort_order: 0 },
-];
+import { sql } from "@/lib/db";
 
 // GET
 export async function GET() {
+  const categories = await sql`
+    SELECT id, name, sort_order
+    FROM categories
+    ORDER BY sort_order ASC, id ASC
+  `;
+
   return NextResponse.json(categories);
 }
 
-// POST (ADD)
+// POST
 export async function POST(req: Request) {
   const body = await req.json();
 
-  const newCat = {
-    id: Date.now(),
-    name: body.name,
-    sort_order: body.sort_order || 0,
-  };
+  const name = String(body.name || "").trim();
+  const sortOrder = Number(body.sort_order || 0);
 
-  categories.push(newCat);
+  if (!name) {
+    return NextResponse.json(
+      { error: "Name is required" },
+      { status: 400 }
+    );
+  }
 
-  return NextResponse.json(newCat);
+  const result = await sql`
+    INSERT INTO categories (name, sort_order)
+    VALUES (${name}, ${sortOrder})
+    RETURNING id, name, sort_order
+  `;
+
+  return NextResponse.json(result[0]);
 }
 
 // DELETE
@@ -30,7 +40,17 @@ export async function DELETE(req: Request) {
   const { searchParams } = new URL(req.url);
   const id = Number(searchParams.get("id"));
 
-  categories = categories.filter((c) => c.id !== id);
+  if (!id) {
+    return NextResponse.json(
+      { error: "Invalid id" },
+      { status: 400 }
+    );
+  }
+
+  await sql`
+    DELETE FROM categories
+    WHERE id = ${id}
+  `;
 
   return NextResponse.json({ success: true });
 }
