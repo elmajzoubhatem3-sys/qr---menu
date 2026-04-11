@@ -12,14 +12,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No file" }, { status: 400 });
     }
 
-    const blob = await put(`products/${Date.now()}-${file.name}`, file);
+    const blob = await put(
+      `products/${Date.now()}-${file.name}`,
+      file,
+      {
+        access: "public", // لأنو هلق store صار public
+      }
+    );
 
-    return NextResponse.json({
-      url: blob.url,
-    });
+    return NextResponse.json({ url: blob.url });
 
   } catch (err) {
-    console.error("REAL ERROR:", err);
+    console.error("UPLOAD ERROR:", err);
 
     return NextResponse.json(
       { error: String(err) },
