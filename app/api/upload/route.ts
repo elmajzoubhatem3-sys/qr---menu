@@ -23,7 +23,6 @@ export async function POST(req: Request) {
     return NextResponse.json({
       url: blob.url,
     });
-
   } catch (err) {
     console.error("UPLOAD ERROR FULL:", err);
 
