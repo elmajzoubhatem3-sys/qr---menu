@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const file = formData.get("file") as File;
+    const file = formData.get("file") as File | null;
 
     if (!file) {
       return NextResponse.json({ error: "No file" }, { status: 400 });
@@ -16,17 +16,19 @@ export async function POST(req: Request) {
       `products/${Date.now()}-${file.name}`,
       file,
       {
-        access: "public", // لأنو هلق store صار public
+        access: "public",
       }
     );
 
-    return NextResponse.json({ url: blob.url });
+    return NextResponse.json({
+      url: blob.url,
+    });
 
   } catch (err) {
-    console.error("UPLOAD ERROR:", err);
+    console.error("UPLOAD ERROR FULL:", err);
 
     return NextResponse.json(
-      { error: String(err) },
+      { error: err instanceof Error ? err.message : "Upload failed" },
       { status: 500 }
     );
   }
