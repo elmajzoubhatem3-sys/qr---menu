@@ -12,15 +12,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No file" }, { status: 400 });
     }
 
-    const blob = await put(file.name, file);
+    const filename = `products/${Date.now()}-${file.name}`;
 
-    return NextResponse.json({
-      url: blob.url,
-    });
+    const blob = await put(filename, file); // بدون access وبدون token
+
+    return NextResponse.json({ url: blob.url });
   } catch (err) {
-    console.error(err);
+    console.error("UPLOAD ERROR FULL:", err);
     return NextResponse.json(
-      { error: "Upload failed" },
+      { error: err instanceof Error ? err.message : "Upload failed" },
       { status: 500 }
     );
   }
