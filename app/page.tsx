@@ -1,27 +1,30 @@
 <header className="hero relative overflow-hidden rounded-[2rem] mb-8">
 
-  {/* 🔥 BACKGROUND IMAGE WITH BLUR */}
+  {/* 🔥 BACKGROUND IMAGE BLURRED */}
   <div
     className="absolute inset-0"
     style={{
       backgroundImage: "url('/placeholder-food.jpg')",
       backgroundSize: "cover",
       backgroundPosition: "center",
-      filter: "blur(12px)",
-      transform: "scale(1.1)" // مهم حتى ما تبين الحواف
+      filter: "blur(45px)",
+      transform: "scale(1.15)",
     }}
   />
 
-  {/* 🔥 DARK OVERLAY */}
-  <div className="absolute inset-0 bg-black/40" />
+  {/* ❌ خففنا التغميق */}
+  <div className="absolute inset-0 bg-white/10" />
 
-  {/* 🔥 CONTENT */}
+  {/* CONTENT */}
   <div className="relative z-10 px-6 py-12 text-white text-center">
-    <div className="flex items-center justify-center gap-3 mb-4">
-      <img src="/logo.png" className="h-12 w-12 object-contain" />
-      <h1 className="text-2xl font-bold">LAMAR CAFFE</h1>
+
+    {/* 🔥 LOGO بالنص */}
+    <div className="flex flex-col items-center justify-center mb-4">
+      <img src="/logo.png" className="h-8 w-8 object-contain mb-2" />
+      <h1 className="text-xl font-bold">LAMAR CAFFE</h1>
     </div>
 
     <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
   </div>
+
 </header>
