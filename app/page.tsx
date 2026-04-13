@@ -59,24 +59,26 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen overflow-hidden">
-      {/* BLURRED RESTAURANT BACKGROUND */}
+      {/* ORIGINAL IMAGE */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: "url('/placeholder-food.jpg')",
-          filter: "blur(22px)",
-          transform: "scale(1.12)",
+          transform: "scale(1.08)",
         }}
       />
 
-      {/* LIGHT OVERLAY */}
-      <div className="absolute inset-0 bg-black/20" />
+      {/* GLASS / FROSTED LAYER */}
+      <div className="absolute inset-0 bg-white/8 backdrop-blur-[20px]" />
+
+      {/* EXTRA SOFT LIGHT */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/5 to-black/10" />
 
       {/* CONTENT */}
       <div className="relative z-10 px-4 py-6 md:px-8">
         <div className="mx-auto max-w-6xl">
           {/* HEADER */}
-          <header className="mb-8 rounded-[2rem] border border-white/20 bg-white/10 px-6 py-10 text-center shadow-lg backdrop-blur-md">
+          <header className="mb-8 rounded-[2rem] border border-white/25 bg-white/10 px-6 py-10 text-center shadow-lg backdrop-blur-md">
             <div className="mb-4 flex flex-col items-center justify-center">
               <img
                 src="/logo.png"
@@ -97,7 +99,7 @@ export default function Home() {
               <a
                 key={cat.id}
                 href={`#cat-${cat.id}`}
-                className="rounded-full border border-white/20 bg-white/15 px-5 py-3 text-sm font-medium text-white shadow-md backdrop-blur-md"
+                className="rounded-full border border-white/25 bg-white/12 px-5 py-3 text-sm font-medium text-white shadow-md backdrop-blur-md"
               >
                 {cat.category}
               </a>
