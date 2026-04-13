@@ -59,18 +59,28 @@ export default function Home() {
 
   return (
     <main className="menu-page">
-
       <div className="menu-content">
-
         {/* 🔥 HEADER */}
-        <header className="hero">
+        <header
+          className="hero relative overflow-hidden rounded-[2rem] mb-8"
+          style={{
+            backgroundImage: "url('/placeholder-food.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {/* BLUR LAYER */}
+          <div className="absolute inset-0 backdrop-blur-md bg-black/35" />
 
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <img src="/logo.png" className="h-12 w-12 object-contain" />
-            <h1 className="text-2xl font-bold">LAMAR CAFFE</h1>
+          {/* CONTENT */}
+          <div className="relative z-10 px-6 py-12 text-white text-center">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <img src="/logo.png" className="h-12 w-12 object-contain" />
+              <h1 className="text-2xl font-bold">LAMAR CAFFE</h1>
+            </div>
+
+            <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
           </div>
-
-          <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
         </header>
 
         {/* CATEGORIES */}
@@ -89,33 +99,25 @@ export default function Home() {
 
             <div className="menu-grid">
               {cat.items.map((item) => (
-                <article key={item.id} className="menu-card bg-white rounded-2xl shadow-md overflow-hidden">
-
-                  {/* IMAGE */}
+                <article
+                  key={item.id}
+                  className="menu-card bg-white rounded-2xl shadow-md overflow-hidden"
+                >
                   <img
                     src={item.image_url || "/placeholder-food.jpg"}
                     alt={item.name}
                     className="w-full h-[180px] object-cover"
                   />
 
-                  {/* TEXT */}
                   <div className="p-4 text-black">
+                    <h3 className="text-lg font-semibold">{item.name}</h3>
 
-                    <h3 className="text-lg font-semibold">
-                      {item.name}
-                    </h3>
-
-                    {/* 🇱🇧 PRICE */}
                     <p className="text-sm mt-1 text-black/70">
                       {(Number(item.price) * 90000).toLocaleString()} L.L
                     </p>
 
-                    <p className="text-sm mt-2 text-black/60">
-                      {item.description}
-                    </p>
-
+                    <p className="text-sm mt-2 text-black/60">{item.description}</p>
                   </div>
-
                 </article>
               ))}
             </div>
