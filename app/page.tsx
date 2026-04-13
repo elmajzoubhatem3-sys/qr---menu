@@ -58,90 +58,78 @@ export default function Home() {
   }, [categories, products]);
 
   return (
-    <main
-      className="relative min-h-screen overflow-hidden"
-      style={{
-        backgroundImage: "url('/placeholder-food.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
-    >
-      {/* blurred restaurant background */}
+    <main className="relative min-h-screen overflow-hidden">
+      {/* RESTAURANT BACKGROUND IMAGE */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 bg-cover bg-center scale-110"
         style={{
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          background: "rgba(255,255,255,0.18)",
+          backgroundImage: "url('/placeholder-food.jpg')",
+          filter: "blur(18px)",
         }}
       />
 
-      {/* content */}
-      <div className="relative z-10 px-4 py-6 md:px-8">
-        <div className="mx-auto max-w-6xl">
+      {/* DARK OVERLAY */}
+      <div className="absolute inset-0 bg-black/35" />
+
+      {/* CONTENT */}
+      <div className="relative z-10">
+        <div className="menu-content">
           {/* HEADER */}
-          <header className="mb-8 rounded-[2rem] bg-white/35 px-6 py-10 text-center backdrop-blur-sm">
-            <div className="mb-4 flex flex-col items-center justify-center">
+          <header className="hero text-center py-10">
+            <div className="flex flex-col items-center justify-center mb-4">
               <img
                 src="/logo.png"
                 alt="LAMAR CAFFE"
-                className="mb-2 h-8 w-8 object-contain"
+                className="h-8 w-8 object-contain mb-2"
               />
-              <h1 className="text-xl font-bold text-black">LAMAR CAFFE</h1>
+              <h1 className="text-xl font-bold text-white">LAMAR CAFFE</h1>
             </div>
 
-            <p className="text-black/75">
+            <p className="text-white/90">
               Fresh meals, beautiful presentation, and a premium dining vibe.
             </p>
           </header>
 
           {/* CATEGORIES */}
-          <div className="mb-8 flex flex-wrap justify-center gap-3">
+          <div className="category-tabs">
             {groupedMenu.map((cat) => (
-              <a
-                key={cat.id}
-                href={`#cat-${cat.id}`}
-                className="rounded-full bg-white/80 px-4 py-2 text-sm font-medium text-black shadow-sm backdrop-blur-sm"
-              >
+              <a key={cat.id} href={`#cat-${cat.id}`} className="category-tab">
                 {cat.category}
               </a>
             ))}
           </div>
 
           {/* MENU */}
-          <div className="space-y-10">
-            {groupedMenu.map((cat) => (
-              <section key={cat.id} id={`cat-${cat.id}`}>
-                <h2 className="mb-5 text-2xl font-bold text-black">{cat.category}</h2>
+          {groupedMenu.map((cat) => (
+            <section key={cat.id} id={`cat-${cat.id}`} className="menu-section">
+              <h2>{cat.category}</h2>
 
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {cat.items.map((item) => (
-                    <article
-                      key={item.id}
-                      className="overflow-hidden rounded-2xl bg-white shadow-md"
-                    >
-                      <img
-                        src={item.image_url || "/placeholder-food.jpg"}
-                        alt={item.name}
-                        className="h-[180px] w-full object-cover"
-                      />
+              <div className="menu-grid">
+                {cat.items.map((item) => (
+                  <article
+                    key={item.id}
+                    className="menu-card bg-white rounded-2xl shadow-md overflow-hidden"
+                  >
+                    <img
+                      src={item.image_url || "/placeholder-food.jpg"}
+                      alt={item.name}
+                      className="w-full h-[180px] object-cover"
+                    />
 
-                      <div className="p-4 text-black">
-                        <h3 className="text-lg font-semibold">{item.name}</h3>
+                    <div className="p-4 text-black">
+                      <h3 className="text-lg font-semibold">{item.name}</h3>
 
-                        <p className="mt-1 text-sm text-black/70">
-                          {(Number(item.price) * 90000).toLocaleString()} L.L
-                        </p>
+                      <p className="text-sm mt-1 text-black/70">
+                        {(Number(item.price) * 90000).toLocaleString()} L.L
+                      </p>
 
-                        <p className="mt-2 text-sm text-black/60">{item.description}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
+                      <p className="text-sm mt-2 text-black/60">{item.description}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
       </div>
     </main>
