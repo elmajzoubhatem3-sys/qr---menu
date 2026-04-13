@@ -58,87 +58,71 @@ export default function Home() {
   }, [categories, products]);
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* BACKGROUND IMAGE */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/placeholder-food.jpg')",
-        }}
-      />
+    <main className="menu-page">
+      <div className="menu-content">
+        {/* 🔥 HEADER */}
+        <header
+          className="hero relative overflow-hidden rounded-[2rem] mb-8"
+          style={{
+            backgroundImage: "url('/placeholder-food.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {/* BLUR LAYER */}
+          <div className="absolute inset-0 backdrop-blur-md bg-black/35" />
 
-      {/* STRONG BLUR LAYER */}
-      <div className="absolute inset-0 bg-black/25 backdrop-blur-xl" />
-
-      {/* EXTRA SOFT GLASS */}
-      <div className="absolute inset-0 bg-white/10" />
-
-      {/* CONTENT */}
-      <div className="relative z-10 px-4 py-6 md:px-8">
-        <div className="mx-auto max-w-6xl">
-          {/* HEADER */}
-          <header className="mb-8 rounded-[2rem] border border-white/20 bg-white/10 px-6 py-10 text-center shadow-lg backdrop-blur-md">
-            <div className="mb-4 flex flex-col items-center justify-center">
-              <img
-                src="/logo.png"
-                alt="LAMAR CAFFE"
-                className="mb-2 h-8 w-8 object-contain"
-              />
-              <h1 className="text-xl font-bold text-white">LAMAR CAFFE</h1>
+          {/* CONTENT */}
+          <div className="relative z-10 px-6 py-12 text-white text-center">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <img src="/logo.png" className="h-12 w-12 object-contain" />
+              <h1 className="text-2xl font-bold">LAMAR CAFFE</h1>
             </div>
 
-            <p className="text-white/90">
-              Fresh meals, beautiful presentation, and a premium dining vibe.
-            </p>
-          </header>
-
-          {/* CATEGORIES */}
-          <div className="mb-8 flex flex-wrap justify-center gap-3">
-            {groupedMenu.map((cat) => (
-              <a
-                key={cat.id}
-                href={`#cat-${cat.id}`}
-                className="rounded-full border border-white/20 bg-white/15 px-5 py-3 text-sm font-medium text-white shadow-md backdrop-blur-md"
-              >
-                {cat.category}
-              </a>
-            ))}
+            <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
           </div>
+        </header>
 
-          {/* MENU */}
-          <div className="space-y-10">
-            {groupedMenu.map((cat) => (
-              <section key={cat.id} id={`cat-${cat.id}`}>
-                <h2 className="mb-5 text-2xl font-bold text-white">{cat.category}</h2>
-
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {cat.items.map((item) => (
-                    <article
-                      key={item.id}
-                      className="overflow-hidden rounded-2xl bg-white shadow-md"
-                    >
-                      <img
-                        src={item.image_url || "/placeholder-food.jpg"}
-                        alt={item.name}
-                        className="h-[180px] w-full object-cover"
-                      />
-
-                      <div className="p-4 text-black">
-                        <h3 className="text-lg font-semibold">{item.name}</h3>
-
-                        <p className="mt-1 text-sm text-black/70">
-                          {(Number(item.price) * 90000).toLocaleString()} L.L
-                        </p>
-
-                        <p className="mt-2 text-sm text-black/60">{item.description}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
+        {/* CATEGORIES */}
+        <div className="category-tabs">
+          {groupedMenu.map((cat) => (
+            <a key={cat.id} href={`#cat-${cat.id}`} className="category-tab">
+              {cat.category}
+            </a>
+          ))}
         </div>
+
+        {/* MENU */}
+        {groupedMenu.map((cat) => (
+          <section key={cat.id} id={`cat-${cat.id}`} className="menu-section">
+            <h2>{cat.category}</h2>
+
+            <div className="menu-grid">
+              {cat.items.map((item) => (
+                <article
+                  key={item.id}
+                  className="menu-card bg-white rounded-2xl shadow-md overflow-hidden"
+                >
+                  <img
+                    src={item.image_url || "/placeholder-food.jpg"}
+                    alt={item.name}
+                    className="w-full h-[180px] object-cover"
+                  />
+
+                  <div className="p-4 text-black">
+                    <h3 className="text-lg font-semibold">{item.name}</h3>
+
+                    <p className="text-sm mt-1 text-black/70">
+                      {(Number(item.price) * 90000).toLocaleString()} L.L
+                    </p>
+
+                    <p className="text-sm mt-2 text-black/60">{item.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     </main>
   );
