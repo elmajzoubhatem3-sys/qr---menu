@@ -1,129 +1,27 @@
-"use client";
+<header className="hero relative overflow-hidden rounded-[2rem] mb-8">
 
-import { useEffect, useMemo, useState } from "react";
+  {/* 🔥 BACKGROUND IMAGE WITH BLUR */}
+  <div
+    className="absolute inset-0"
+    style={{
+      backgroundImage: "url('/placeholder-food.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      filter: "blur(12px)",
+      transform: "scale(1.1)" // مهم حتى ما تبين الحواف
+    }}
+  />
 
-type Category = {
-  id: number;
-  name: string;
-  sort_order: number;
-};
+  {/* 🔥 DARK OVERLAY */}
+  <div className="absolute inset-0 bg-black/40" />
 
-type Product = {
-  id: number;
-  category_id: number;
-  name: string;
-  description: string;
-  price: number | string;
-  image_url: string;
-  sort_order: number;
-  is_best_seller: boolean;
-  is_spicy: boolean;
-};
+  {/* 🔥 CONTENT */}
+  <div className="relative z-10 px-6 py-12 text-white text-center">
+    <div className="flex items-center justify-center gap-3 mb-4">
+      <img src="/logo.png" className="h-12 w-12 object-contain" />
+      <h1 className="text-2xl font-bold">LAMAR CAFFE</h1>
+    </div>
 
-export default function Home() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-
-  async function loadData() {
-    try {
-      const [categoriesRes, productsRes] = await Promise.all([
-        fetch("/api/categories", { cache: "no-store" }),
-        fetch("/api/products", { cache: "no-store" }),
-      ]);
-
-      if (!categoriesRes.ok || !productsRes.ok) return;
-
-      const categoriesData: Category[] = await categoriesRes.json();
-      const productsData: Product[] = await productsRes.json();
-
-      setCategories(categoriesData);
-      setProducts(productsData);
-    } catch (error) {
-      console.log("Menu load error:", error);
-    }
-  }
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const groupedMenu = useMemo(() => {
-    return categories.map((category) => ({
-      id: category.id,
-      category: category.name,
-      items: products
-        .filter((product) => Number(product.category_id) === Number(category.id))
-        .sort((a, b) => Number(a.sort_order) - Number(b.sort_order)),
-    }));
-  }, [categories, products]);
-
-  return (
-    <main className="menu-page">
-      <div className="menu-content">
-        {/* 🔥 HEADER */}
-        <header
-          className="hero relative overflow-hidden rounded-[2rem] mb-8"
-          style={{
-            backgroundImage: "url('/placeholder-food.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          {/* BLUR LAYER */}
-          <div className="absolute inset-0 backdrop-blur-md bg-black/35" />
-
-          {/* CONTENT */}
-          <div className="relative z-10 px-6 py-12 text-white text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <img src="/logo.png" className="h-12 w-12 object-contain" />
-              <h1 className="text-2xl font-bold">LAMAR CAFFE</h1>
-            </div>
-
-            <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
-          </div>
-        </header>
-
-        {/* CATEGORIES */}
-        <div className="category-tabs">
-          {groupedMenu.map((cat) => (
-            <a key={cat.id} href={`#cat-${cat.id}`} className="category-tab">
-              {cat.category}
-            </a>
-          ))}
-        </div>
-
-        {/* MENU */}
-        {groupedMenu.map((cat) => (
-          <section key={cat.id} id={`cat-${cat.id}`} className="menu-section">
-            <h2>{cat.category}</h2>
-
-            <div className="menu-grid">
-              {cat.items.map((item) => (
-                <article
-                  key={item.id}
-                  className="menu-card bg-white rounded-2xl shadow-md overflow-hidden"
-                >
-                  <img
-                    src={item.image_url || "/placeholder-food.jpg"}
-                    alt={item.name}
-                    className="w-full h-[180px] object-cover"
-                  />
-
-                  <div className="p-4 text-black">
-                    <h3 className="text-lg font-semibold">{item.name}</h3>
-
-                    <p className="text-sm mt-1 text-black/70">
-                      {(Number(item.price) * 90000).toLocaleString()} L.L
-                    </p>
-
-                    <p className="text-sm mt-2 text-black/60">{item.description}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
-    </main>
-  );
-}
+    <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
+  </div>
+</header>
