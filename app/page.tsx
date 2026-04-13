@@ -58,79 +58,71 @@ export default function Home() {
   }, [categories, products]);
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* RESTAURANT BACKGROUND IMAGE */}
-      <div
-        className="absolute inset-0 bg-cover bg-center scale-110"
-        style={{
-          backgroundImage: "url('/placeholder-food.jpg')",
-          filter: "blur(18px)",
-        }}
-      />
+    <main className="menu-page">
+      <div className="menu-content">
+        {/* 🔥 HEADER */}
+        <header
+          className="hero relative overflow-hidden rounded-[2rem] mb-8"
+          style={{
+            backgroundImage: "url('/placeholder-food.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {/* BLUR LAYER */}
+          <div className="absolute inset-0 backdrop-blur-md bg-black/35" />
 
-      {/* DARK OVERLAY */}
-      <div className="absolute inset-0 bg-black/35" />
-
-      {/* CONTENT */}
-      <div className="relative z-10">
-        <div className="menu-content">
-          {/* HEADER */}
-          <header className="hero text-center py-10">
-            <div className="flex flex-col items-center justify-center mb-4">
-              <img
-                src="/logo.png"
-                alt="LAMAR CAFFE"
-                className="h-8 w-8 object-contain mb-2"
-              />
-              <h1 className="text-xl font-bold text-white">LAMAR CAFFE</h1>
+          {/* CONTENT */}
+          <div className="relative z-10 px-6 py-12 text-white text-center">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <img src="/logo.png" className="h-12 w-12 object-contain" />
+              <h1 className="text-2xl font-bold">LAMAR CAFFE</h1>
             </div>
 
-            <p className="text-white/90">
-              Fresh meals, beautiful presentation, and a premium dining vibe.
-            </p>
-          </header>
-
-          {/* CATEGORIES */}
-          <div className="category-tabs">
-            {groupedMenu.map((cat) => (
-              <a key={cat.id} href={`#cat-${cat.id}`} className="category-tab">
-                {cat.category}
-              </a>
-            ))}
+            <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
           </div>
+        </header>
 
-          {/* MENU */}
+        {/* CATEGORIES */}
+        <div className="category-tabs">
           {groupedMenu.map((cat) => (
-            <section key={cat.id} id={`cat-${cat.id}`} className="menu-section">
-              <h2>{cat.category}</h2>
-
-              <div className="menu-grid">
-                {cat.items.map((item) => (
-                  <article
-                    key={item.id}
-                    className="menu-card bg-white rounded-2xl shadow-md overflow-hidden"
-                  >
-                    <img
-                      src={item.image_url || "/placeholder-food.jpg"}
-                      alt={item.name}
-                      className="w-full h-[180px] object-cover"
-                    />
-
-                    <div className="p-4 text-black">
-                      <h3 className="text-lg font-semibold">{item.name}</h3>
-
-                      <p className="text-sm mt-1 text-black/70">
-                        {(Number(item.price) * 90000).toLocaleString()} L.L
-                      </p>
-
-                      <p className="text-sm mt-2 text-black/60">{item.description}</p>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
+            <a key={cat.id} href={`#cat-${cat.id}`} className="category-tab">
+              {cat.category}
+            </a>
           ))}
         </div>
+
+        {/* MENU */}
+        {groupedMenu.map((cat) => (
+          <section key={cat.id} id={`cat-${cat.id}`} className="menu-section">
+            <h2>{cat.category}</h2>
+
+            <div className="menu-grid">
+              {cat.items.map((item) => (
+                <article
+                  key={item.id}
+                  className="menu-card bg-white rounded-2xl shadow-md overflow-hidden"
+                >
+                  <img
+                    src={item.image_url || "/placeholder-food.jpg"}
+                    alt={item.name}
+                    className="w-full h-[180px] object-cover"
+                  />
+
+                  <div className="p-4 text-black">
+                    <h3 className="text-lg font-semibold">{item.name}</h3>
+
+                    <p className="text-sm mt-1 text-black/70">
+                      {(Number(item.price) * 90000).toLocaleString()} L.L
+                    </p>
+
+                    <p className="text-sm mt-2 text-black/60">{item.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     </main>
   );
