@@ -58,25 +58,25 @@ export default function Home() {
   }, [categories, products]);
 
   return (
-    <main className="menu-page">
-      <div className="menu-content">
-        {/* 🔥 HEADER */}
-        <header
-          className="hero relative overflow-hidden rounded-[2rem] mb-8"
-          style={{
-            backgroundImage: "url('/placeholder-food.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          {/* BLUR LAYER */}
-          <div className="absolute inset-0 backdrop-blur-md bg-black/35" />
+    <main
+      className="menu-page relative min-h-screen overflow-hidden"
+      style={{
+        backgroundImage: "url('/placeholder-food.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* FULL BACKGROUND BLUR */}
+      <div className="absolute inset-0 bg-white/30 backdrop-blur-xl" />
 
+      <div className="menu-content relative z-10">
+        {/* 🔥 HEADER */}
+        <header className="hero relative overflow-hidden rounded-[2rem] mb-8">
           {/* CONTENT */}
           <div className="relative z-10 px-6 py-12 text-white text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <img src="/logo.png" className="h-12 w-12 object-contain" />
-              <h1 className="text-2xl font-bold">LAMAR CAFFE</h1>
+            <div className="flex flex-col items-center justify-center mb-4">
+              <img src="/logo.png" className="h-10 w-10 object-contain mb-2" />
+              <h1 className="text-xl font-bold">LAMAR CAFFE</h1>
             </div>
 
             <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
