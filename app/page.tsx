@@ -59,15 +59,21 @@ export default function Home() {
 
   return (
     <main className="menu-page">
-      <div className="menu-overlay" />
 
       <div className="menu-content">
+
+        {/* 🔥 HEADER */}
         <header className="hero">
-          <span className="hero-badge">SCAN • VIEW • ENJOY</span>
-          <h1>Restaurant Menu</h1>
+
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <img src="/logo.png" className="h-12 w-12 object-contain" />
+            <h1 className="text-2xl font-bold">LAMAR CAFFE</h1>
+          </div>
+
           <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
         </header>
 
+        {/* CATEGORIES */}
         <div className="category-tabs">
           {groupedMenu.map((cat) => (
             <a key={cat.id} href={`#cat-${cat.id}`} className="category-tab">
@@ -76,27 +82,40 @@ export default function Home() {
           ))}
         </div>
 
+        {/* MENU */}
         {groupedMenu.map((cat) => (
           <section key={cat.id} id={`cat-${cat.id}`} className="menu-section">
             <h2>{cat.category}</h2>
 
             <div className="menu-grid">
               {cat.items.map((item) => (
-                <article key={item.id} className="menu-card">
+                <article key={item.id} className="menu-card bg-white rounded-2xl shadow-md overflow-hidden">
+
+                  {/* IMAGE */}
                   <img
                     src={item.image_url || "/placeholder-food.jpg"}
                     alt={item.name}
-                    className="menu-card-image"
+                    className="w-full h-[180px] object-cover"
                   />
 
-                  <div className="menu-card-body">
-                    <div className="menu-card-top">
-                      <h3>{item.name}</h3>
-                      <span>${Number(item.price).toFixed(2)}</span>
-                    </div>
+                  {/* TEXT */}
+                  <div className="p-4 text-black">
 
-                    <p>{item.description}</p>
+                    <h3 className="text-lg font-semibold">
+                      {item.name}
+                    </h3>
+
+                    {/* 🇱🇧 PRICE */}
+                    <p className="text-sm mt-1 text-black/70">
+                      {(Number(item.price) * 90000).toLocaleString()} L.L
+                    </p>
+
+                    <p className="text-sm mt-2 text-black/60">
+                      {item.description}
+                    </p>
+
                   </div>
+
                 </article>
               ))}
             </div>
