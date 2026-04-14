@@ -59,13 +59,24 @@ export default function Home() {
 
   return (
     <main className="menu-page relative overflow-hidden">
- 	 <div className="absolute inset-0 backdrop-blur-md bg-white/10 z-0" />
- 	 <div className="menu-content relative z-10">
-       		 <header className="hero">
-        	  <span className="hero-badge">SCAN • VIEW • ENJOY</span>
-         	  <h1>Restaurant Menu</h1>
-         	  <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
-    		    </header>
+      {/* الخلفية المغبشة */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: "url('/placeholder-food.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "blur(6px)",
+          transform: "scale(1.05)",
+        }}
+      />
+
+      <div className="menu-content relative z-10">
+        <header className="hero">
+          <span className="hero-badge">SCAN • VIEW • ENJOY</span>
+          <h1>Restaurant Menu</h1>
+          <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
+        </header>
 
         <div className="category-tabs">
           {groupedMenu.map((cat) => (
