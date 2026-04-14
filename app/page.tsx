@@ -63,11 +63,6 @@ export default function Home() {
 
       <div className="menu-content">
         <header className="hero text-center">
-          <img
-            src="/logo.png"
-            alt="LAMAR CAFFE"
-            className="mx-auto mb-3 h-2 w-2 object-contain"
-          />
           <span className="hero-badge">SCAN • VIEW • ENJOY</span>
           <h1>LAMAR CAFFE</h1>
           <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
@@ -97,9 +92,9 @@ export default function Home() {
                   </div>
 
                   <div className="mt-2 px-1 text-white">
-                    <h3>{item.name}</h3>
+                    <h3 className="mb-0">{item.name}</h3>
 
-                    <p className="mt-1">
+                    <p className="mt-0">
                       {(Number(item.price) * 90000).toLocaleString()} L.L
                     </p>
 
