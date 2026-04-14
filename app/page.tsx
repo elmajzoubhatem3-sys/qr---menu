@@ -58,13 +58,14 @@ export default function Home() {
   }, [categories, products]);
 
   return (
-    <main className="menu-page">
-      <div className="menu-content">
-        <header className="hero">
-          <span className="hero-badge">SCAN • VIEW • ENJOY</span>
-          <h1>Restaurant Menu</h1>
-          <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
-        </header>
+    <main className="menu-page relative overflow-hidden">
+ 	 <div className="absolute inset-0 backdrop-blur-md bg-white/10 z-0" />
+ 	 <div className="menu-content relative z-10">
+       		 <header className="hero">
+        	  <span className="hero-badge">SCAN • VIEW • ENJOY</span>
+         	  <h1>Restaurant Menu</h1>
+         	  <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
+    		    </header>
 
         <div className="category-tabs">
           {groupedMenu.map((cat) => (
