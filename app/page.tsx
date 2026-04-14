@@ -16,8 +16,6 @@ type Product = {
   price: number | string;
   image_url: string;
   sort_order: number;
-  is_best_seller: boolean;
-  is_spicy: boolean;
 };
 
 export default function Home() {
@@ -33,11 +31,8 @@ export default function Home() {
 
       if (!categoriesRes.ok || !productsRes.ok) return;
 
-      const categoriesData: Category[] = await categoriesRes.json();
-      const productsData: Product[] = await productsRes.json();
-
-      setCategories(categoriesData);
-      setProducts(productsData);
+      setCategories(await categoriesRes.json());
+      setProducts(await productsRes.json());
     } catch (error) {
       console.log("Menu load error:", error);
     }
@@ -58,25 +53,21 @@ export default function Home() {
   }, [categories, products]);
 
   return (
-    <main className="menu-page relative overflow-hidden">
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: "url('/placeholder-food.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          filter: "blur(14px)",
-          transform: "scale(1.08)",
-        }}
-      />
+    <main className="menu-page">
+      
+      {/* 🔥 BLUR OVERLAY (المهم) */}
+      <div className="menu-overlay" />
 
-      <div className="menu-content relative z-10">
+      <div className="menu-content">
+
+        {/* HEADER */}
         <header className="hero">
           <span className="hero-badge">SCAN • VIEW • ENJOY</span>
           <h1>Restaurant Menu</h1>
           <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
         </header>
 
+        {/* CATEGORIES */}
         <div className="category-tabs">
           {groupedMenu.map((cat) => (
             <a key={cat.id} href={`#cat-${cat.id}`} className="category-tab">
@@ -85,6 +76,7 @@ export default function Home() {
           ))}
         </div>
 
+        {/* MENU */}
         {groupedMenu.map((cat) => (
           <section key={cat.id} id={`cat-${cat.id}`} className="menu-section">
             <h2>{cat.category}</h2>
@@ -101,7 +93,11 @@ export default function Home() {
                   <div className="menu-card-body">
                     <div className="menu-card-top">
                       <h3>{item.name}</h3>
-                      <span>${Number(item.price).toFixed(2)}</span>
+
+                      {/* 🇱🇧 السعر باللبناني */}
+                      <span>
+                        {(Number(item.price) * 90000).toLocaleString()} L.L
+                      </span>
                     </div>
 
                     <p>{item.description}</p>
@@ -111,6 +107,7 @@ export default function Home() {
             </div>
           </section>
         ))}
+
       </div>
     </main>
   );

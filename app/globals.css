@@ -18,18 +18,25 @@ a {
   color: inherit;
 }
 
-/* 🔥 FIXED MENU PAGE */
+/* MENU PAGE */
 .menu-page {
   min-height: 100vh;
   position: relative;
-  background: transparent; /* ❌ حذفنا الصورة */
+  background-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1600&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
-/* ❌ شلنا overlay لأنه كان يعمل سواد */
+/* 🔥 BLUR FIX (هون التعديل الأساسي) */
 .menu-overlay {
-  display: none;
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.08); /* 👈 بدل الأسود */
 }
 
+/* CONTENT */
 .menu-content {
   position: relative;
   z-index: 2;
