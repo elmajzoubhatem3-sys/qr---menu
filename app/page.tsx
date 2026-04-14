@@ -66,7 +66,7 @@ export default function Home() {
           backgroundImage: "url('/placeholder-food.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          filter: "blur(10px)",
+          filter: "blur(20px)",
           transform: "scale(1.05)",
         }}
       />
