@@ -59,15 +59,14 @@ export default function Home() {
 
   return (
     <main className="menu-page relative overflow-hidden">
-      {/* الخلفية المغبشة */}
       <div
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: "url('/placeholder-food.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          filter: "blur(20px)",
-          transform: "scale(1.05)",
+          filter: "blur(14px)",
+          transform: "scale(1.08)",
         }}
       />
 
@@ -87,7 +86,7 @@ export default function Home() {
         </div>
 
         {groupedMenu.map((cat) => (
-          <section key={cat.id} id={`#cat-${cat.id}`} className="menu-section">
+          <section key={cat.id} id={`cat-${cat.id}`} className="menu-section">
             <h2>{cat.category}</h2>
 
             <div className="menu-grid">
