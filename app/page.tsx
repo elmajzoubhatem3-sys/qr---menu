@@ -66,7 +66,7 @@ export default function Home() {
           <img
             src="/logo.png"
             alt="LAMAR CAFFE"
-            className="mx-auto mb-3 h-10 w-10 object-contain"
+            className="mx-auto mb-3 h-6 w-6 object-contain"
           />
           <span className="hero-badge">SCAN • VIEW • ENJOY</span>
           <h1>LAMAR CAFFE</h1>
