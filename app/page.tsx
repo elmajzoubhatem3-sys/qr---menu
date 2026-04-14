@@ -87,14 +87,16 @@ export default function Home() {
 
             <div className="menu-grid">
               {cat.items.map((item) => (
-                <article key={item.id} className="menu-card">
-                  <img
-                    src={item.image_url || "/placeholder-food.jpg"}
-                    alt={item.name}
-                    className="menu-card-image"
-                  />
+                <div key={item.id}>
+                  <div className="menu-card">
+                    <img
+                      src={item.image_url || "/placeholder-food.jpg"}
+                      alt={item.name}
+                      className="menu-card-image"
+                    />
+                  </div>
 
-                  <div className="menu-card-body">
+                  <div className="mt-2 px-1 text-white">
                     <h3>{item.name}</h3>
 
                     <p className="mt-1">
@@ -103,7 +105,7 @@ export default function Home() {
 
                     <p>{item.description}</p>
                   </div>
-                </article>
+                </div>
               ))}
             </div>
           </section>
