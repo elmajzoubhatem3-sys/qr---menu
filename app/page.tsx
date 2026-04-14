@@ -60,15 +60,12 @@ export default function Home() {
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: "url('/placeholder-food.jpg')",
-          filter: "blur(15px)",
+          filter: "blur(20px)",
           transform: "scale(1.1)",
         }}
       />
 
-      {/* طبقة خفيفة مش سودا */}
-      <div className="absolute inset-0 bg-white/10" />
-
-      {/* كل الصفحة */}
+      {/* 🔥 المحتوى */}
       <div className="relative z-10 p-6">
 
         {/* HEADER */}
@@ -80,6 +77,10 @@ export default function Home() {
           <h1 className="text-white text-xl font-bold">
             LAMAR CAFFE
           </h1>
+
+          <p className="text-white/90 mt-2">
+            Fresh meals, beautiful presentation, and a premium dining vibe.
+          </p>
         </header>
 
         {/* CATEGORIES */}
@@ -127,6 +128,7 @@ export default function Home() {
             </div>
           </section>
         ))}
+
       </div>
     </main>
   );
