@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 type Category = {
   id: number;
   name: string;
+  sort_order: number;
 };
 
 type Product = {
@@ -14,6 +15,9 @@ type Product = {
   description: string;
   price: number | string;
   image_url: string;
+  sort_order: number;
+  is_best_seller: boolean;
+  is_spicy: boolean;
 };
 
 export default function Home() {
@@ -21,13 +25,22 @@ export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
 
   async function loadData() {
-    const [catRes, prodRes] = await Promise.all([
-      fetch("/api/categories"),
-      fetch("/api/products"),
-    ]);
+    try {
+      const [categoriesRes, productsRes] = await Promise.all([
+        fetch("/api/categories", { cache: "no-store" }),
+        fetch("/api/products", { cache: "no-store" }),
+      ]);
 
-    setCategories(await catRes.json());
-    setProducts(await prodRes.json());
+      if (!categoriesRes.ok || !productsRes.ok) return;
+
+      const categoriesData: Category[] = await categoriesRes.json();
+      const productsData: Product[] = await productsRes.json();
+
+      setCategories(categoriesData);
+      setProducts(productsData);
+    } catch (error) {
+      console.log("Menu load error:", error);
+    }
   }
 
   useEffect(() => {
@@ -35,103 +48,58 @@ export default function Home() {
   }, []);
 
   const groupedMenu = useMemo(() => {
-    return categories.map((cat) => ({
-      ...cat,
-      items: products.filter(
-        (p) => Number(p.category_id) === Number(cat.id)
-      ),
+    return categories.map((category) => ({
+      id: category.id,
+      category: category.name,
+      items: products
+        .filter((product) => Number(product.category_id) === Number(category.id))
+        .sort((a, b) => Number(a.sort_order) - Number(b.sort_order)),
     }));
   }, [categories, products]);
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
-
-      {/* 🔥 BLURRED BACKGROUND */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/placeholder-food.jpg')",
-          filter: "blur(25px)",
-          transform: "scale(1.1)",
-        }}
-      />
-
-      {/* CONTENT */}
-      <div className="relative z-10 p-5">
-
-        {/* HEADER */}
-        <header className="text-center mb-6">
-          <img
-            src="/logo.png"
-            className="mx-auto mb-2 h-8 w-8 object-contain"
-          />
-          <h1 className="text-white text-xl font-bold">
-            LAMAR CAFFE
-          </h1>
+    <main className="menu-page">
+      <div className="menu-content">
+        <header className="hero">
+          <span className="hero-badge">SCAN • VIEW • ENJOY</span>
+          <h1>Restaurant Menu</h1>
+          <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
         </header>
 
-        {/* CATEGORIES */}
-        <div className="flex gap-3 overflow-x-auto mb-6">
+        <div className="category-tabs">
           {groupedMenu.map((cat) => (
-            <a
-              key={cat.id}
-              href={`#cat-${cat.id}`}
-              className="bg-white/20 text-white px-5 py-3 rounded-full backdrop-blur-md whitespace-nowrap"
-            >
-              {cat.name}
+            <a key={cat.id} href={`#cat-${cat.id}`} className="category-tab">
+              {cat.category}
             </a>
           ))}
         </div>
 
-        {/* MENU */}
         {groupedMenu.map((cat) => (
-          <section key={cat.id} id={`cat-${cat.id}`} className="mb-10">
-            <h2 className="text-white text-2xl mb-4">{cat.name}</h2>
+          <section key={cat.id} id={`#cat-${cat.id}`} className="menu-section">
+            <h2>{cat.category}</h2>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-
+            <div className="menu-grid">
               {cat.items.map((item) => (
-                <article
-                  key={item.id}
-                  className="relative overflow-hidden rounded-2xl"
-                >
-
-                  {/* IMAGE */}
+                <article key={item.id} className="menu-card">
                   <img
-                    src={item.image_url}
-                    className="h-[200px] w-full object-cover"
+                    src={item.image_url || "/placeholder-food.jpg"}
+                    alt={item.name}
+                    className="menu-card-image"
                   />
 
-                  {/* 🔥 GLASS / BLUR AREA */}
-                  <div className="absolute bottom-0 w-full p-4
-                    bg-gradient-to-t from-black/80 via-black/40 to-transparent
-                    backdrop-blur-md">
-
-                    <div className="flex justify-between items-start">
-                      <h3 className="text-white font-semibold">
-                        {item.name}
-                      </h3>
-
-                      <span className="text-yellow-400 font-bold">
-                        ${(Number(item.price)).toFixed(2)}
-                      </span>
+                  <div className="menu-card-body">
+                    <div className="menu-card-top">
+                      <h3>{item.name}</h3>
+                      <span>${Number(item.price).toFixed(2)}</span>
                     </div>
 
-                    {item.description && (
-                      <p className="text-white/80 text-sm mt-2">
-                        {item.description}
-                      </p>
-                    )}
-
+                    <p>{item.description}</p>
                   </div>
-
                 </article>
               ))}
-
             </div>
           </section>
         ))}
-
       </div>
     </main>
   );
