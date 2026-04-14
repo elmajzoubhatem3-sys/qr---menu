@@ -1,30 +1,24 @@
-<header className="hero relative overflow-hidden rounded-[2rem] mb-8">
+"use client";
 
-  {/* 🔥 BACKGROUND IMAGE BLURRED */}
-  <div
-    className="absolute inset-0"
-    style={{
-      backgroundImage: "url('/placeholder-food.jpg')",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      filter: "blur(45px)",
-      transform: "scale(1.15)",
-    }}
-  />
+export default function Home() {
+  return (
+    <main className="relative min-h-screen overflow-hidden">
 
-  {/* ❌ خففنا التغميق */}
-  <div className="absolute inset-0 bg-white/10" />
+      {/* الخلفية المغبشة */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/placeholder-food.jpg')",
+          filter: "blur(30px)",
+          transform: "scale(1.2)",
+        }}
+      />
 
-  {/* CONTENT */}
-  <div className="relative z-10 px-6 py-12 text-white text-center">
+      {/* المحتوى */}
+      <div className="relative z-10 flex items-center justify-center h-screen text-white">
+        <h1 className="text-3xl font-bold">LAMAR CAFFE</h1>
+      </div>
 
-    {/* 🔥 LOGO بالنص */}
-    <div className="flex flex-col items-center justify-center mb-4">
-      <img src="/logo.png" className="h-8 w-8 object-contain mb-2" />
-      <h1 className="text-xl font-bold">LAMAR CAFFE</h1>
-    </div>
-
-    <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
-  </div>
-
-</header>
+    </main>
+  );
+}
