@@ -16,6 +16,8 @@ type Product = {
   price: number | string;
   image_url: string;
   sort_order: number;
+  is_best_seller: boolean;
+  is_spicy: boolean;
 };
 
 export default function Home() {
@@ -31,8 +33,11 @@ export default function Home() {
 
       if (!categoriesRes.ok || !productsRes.ok) return;
 
-      setCategories(await categoriesRes.json());
-      setProducts(await productsRes.json());
+      const categoriesData: Category[] = await categoriesRes.json();
+      const productsData: Product[] = await productsRes.json();
+
+      setCategories(categoriesData);
+      setProducts(productsData);
     } catch (error) {
       console.log("Menu load error:", error);
     }
@@ -54,20 +59,20 @@ export default function Home() {
 
   return (
     <main className="menu-page">
-      
-      {/* 🔥 BLUR OVERLAY (المهم) */}
       <div className="menu-overlay" />
 
       <div className="menu-content">
-
-        {/* HEADER */}
-        <header className="hero">
+        <header className="hero text-center">
+          <img
+            src="/logo.png"
+            alt="LAMAR CAFFE"
+            className="mx-auto mb-3 h-10 w-10 object-contain"
+          />
           <span className="hero-badge">SCAN • VIEW • ENJOY</span>
-          <h1>Restaurant Menu</h1>
+          <h1>LAMAR CAFFE</h1>
           <p>Fresh meals, beautiful presentation, and a premium dining vibe.</p>
         </header>
 
-        {/* CATEGORIES */}
         <div className="category-tabs">
           {groupedMenu.map((cat) => (
             <a key={cat.id} href={`#cat-${cat.id}`} className="category-tab">
@@ -76,7 +81,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* MENU */}
         {groupedMenu.map((cat) => (
           <section key={cat.id} id={`cat-${cat.id}`} className="menu-section">
             <h2>{cat.category}</h2>
@@ -91,14 +95,11 @@ export default function Home() {
                   />
 
                   <div className="menu-card-body">
-                    <div className="menu-card-top">
-                      <h3>{item.name}</h3>
+                    <h3>{item.name}</h3>
 
-                      {/* 🇱🇧 السعر باللبناني */}
-                      <span>
-                        {(Number(item.price) * 90000).toLocaleString()} L.L
-                      </span>
-                    </div>
+                    <p className="mt-1">
+                      {(Number(item.price) * 90000).toLocaleString()} L.L
+                    </p>
 
                     <p>{item.description}</p>
                   </div>
@@ -107,7 +108,6 @@ export default function Home() {
             </div>
           </section>
         ))}
-
       </div>
     </main>
   );
