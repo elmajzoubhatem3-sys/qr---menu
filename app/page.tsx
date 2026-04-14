@@ -9,7 +9,7 @@ export default function Home() {
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: "url('/placeholder-food.jpg')",
-          filter: "blur(30px)",
+          filter: "blur(5px)",
           transform: "scale(1.2)",
         }}
       />
