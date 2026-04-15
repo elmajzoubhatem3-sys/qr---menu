@@ -85,6 +85,7 @@ a {
   overflow-x: auto;
   margin-bottom: 28px;
   padding-bottom: 6px;
+  backdrop-filter: blur(6px); /* لتطبيق تأثير الضبابية */
 }
 
 .category-tab {
