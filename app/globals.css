@@ -91,10 +91,10 @@ a {
   white-space: nowrap;
   padding: 12px 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.1); /* يمكنك تعديل اللون حسب الحاجة */
+    border: 1px solid rgba(255, 255, 255, 0.14);
   font-weight: 700;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px); /* لتطبيق تأثير الضبابية */
 }
 
 .menu-section {
