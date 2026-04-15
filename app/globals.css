@@ -130,7 +130,7 @@ a {
 }
 
 .menu-card-body {
-  padding: 16px;
+  padding: 10px;
 }
 
 .menu-card-body h3 {
@@ -142,7 +142,7 @@ a {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 14px;
+  gap: 10px;
 }
 
 .menu-card-top h3 {
