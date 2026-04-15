@@ -29,7 +29,7 @@ a {
   background-size: cover;
   background-position: center;
 
-  background-attachment: fixed; /* 👈 خليها */
+  background-attachment: fixed;
 }
 
 .menu-overlay {
@@ -85,16 +85,16 @@ a {
   overflow-x: auto;
   margin-bottom: 28px;
   padding-bottom: 6px;
-  backdrop-filter: blur(6px); /* لتطبيق تأثير الضبابية */
 }
 
 .category-tab {
+  white-space: nowrap;
   padding: 12px 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1); /* خلفية شفافة */
-   border: 1px solid rgba(255, 255, 255, 0.14); /* إضافة الإطار حول التصنيف */
-   font-weight: 700;
-  backdrop-filter: blur(8px); /* تأثير الضبابية */
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-weight: 700;
+  backdrop-filter: blur(8px);
 }
 
 .menu-section {
@@ -119,6 +119,7 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(10px);
+  margin-bottom: 20px; /* المسافة بين الصورة والنص */
 }
 
 .menu-card-image {
@@ -130,7 +131,8 @@ a {
 }
 
 .menu-card-body {
-  padding: 0;
+  padding: 16px;
+  margin-bottom: 10px; /* المسافة بين الاسم والسعر */
 }
 
 .menu-card-body h3 {
@@ -142,7 +144,7 @@ a {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 6px;
+  gap: 14px;
 }
 
 .menu-card-top h3 {
@@ -152,14 +154,14 @@ a {
 
 .menu-card-top span {
   font-weight: 800;
-  color: #ffd27a; /* اللون البرتقالي الفاتح */
-   white-space: nowrap;
+  color: #ffd27a;
+  white-space: nowrap;
 }
 
 .menu-card p {
-  margin: 0;
+  margin: 10px 0 0;
   color: rgba(255, 255, 255, 0.82);
-  line-height: 0.5;
+  line-height: 1.5;
   font-size: 14px;
 }
 
@@ -539,11 +541,4 @@ a {
   .menu-card-body p {
     font-size: 12px;
   }
-}
-
-.menu-card p {
-  margin: 0; /* إزالة المسافة */
-  color: rgba(255, 255, 255, 0.82); /* اللون */
-  line-height: 1.5; /* المسافة بين الأسطر داخل الفقرة */
-  font-size: 14px; /* حجم الخط */
 }
