@@ -89,13 +89,12 @@ a {
 }
 
 .category-tab {
-  white-space: nowrap;
   padding: 12px 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1); /* اللون */
-    border: 1px solid rgba(255, 255, 255, 0.14);
-  font-weight: 700;
-  backdrop-filter: blur(8px); /* هنا يتم تطبيق الضبابية */
+  background: rgba(255, 255, 255, 0.1); /* خلفية شفافة */
+   border: 1px solid rgba(255, 255, 255, 0.14); /* إضافة الإطار حول التصنيف */
+   font-weight: 700;
+  backdrop-filter: blur(8px); /* تأثير الضبابية */
 }
 
 .menu-section {
@@ -153,8 +152,8 @@ a {
 
 .menu-card-top span {
   font-weight: 800;
-  color: #ffd27a;
-  white-space: nowrap;
+  color: #ffd27a; /* اللون البرتقالي الفاتح */
+   white-space: nowrap;
 }
 
 .menu-card p {
