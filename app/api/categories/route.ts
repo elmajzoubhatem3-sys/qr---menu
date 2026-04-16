@@ -6,9 +6,9 @@ import { sql } from "@/lib/db";
 // GET
 export async function GET() {
   const categories = await sql`
-    SELECT id, name, sort_order
+    SELECT id, name
     FROM categories
-    ORDER BY sort_order ASC, id ASC
+    ORDER BY id ASC
   `;
 
   return NextResponse.json(categories);
@@ -19,7 +19,6 @@ export async function POST(req: Request) {
   const body = await req.json();
 
   const name = String(body.name || "").trim();
-  const sortOrder = Number(body.sort_order || 0);
 
   if (!name) {
     return NextResponse.json(
@@ -29,9 +28,9 @@ export async function POST(req: Request) {
   }
 
   const result = await sql`
-    INSERT INTO categories (name, sort_order)
-    VALUES (${name}, ${sortOrder})
-    RETURNING id, name, sort_order
+    INSERT INTO categories (name)
+    VALUES (${name})
+    RETURNING id, name
   `;
 
   return NextResponse.json(result[0]);
