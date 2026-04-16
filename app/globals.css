@@ -28,7 +28,13 @@ a {
   background-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1600&auto=format&fit=crop");
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  background-attachment: fixed; /* جعل الخلفية ثابتة */
+}
+
+@media (max-width: 768px) {
+  .menu-page {
+    background-attachment: scroll; /* إلغاء التأثير الثابت على الجوال */
+  }
 }
 
 .menu-overlay {
