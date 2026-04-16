@@ -93,10 +93,18 @@ a {
 }
 
 .category-tab {
+  white-space: nowrap;
   padding: 6px 14px;
   border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.2);
+  -webkit-backdrop-filter: blur(8px);
+
+  font-size: 13px;
+  color: #ddd;
 }
 
 .menu-section {
