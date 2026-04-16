@@ -28,7 +28,6 @@ a {
   background-image: url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1600&auto=format&fit=crop");
   background-size: cover;
   background-position: center;
-
   background-attachment: fixed;
 }
 
@@ -94,7 +93,7 @@ a {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.14);
   font-weight: 700;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px); /* التأثير الضبابي */
 }
 
 .menu-section {
@@ -154,7 +153,7 @@ a {
 
 .menu-card-top span {
   font-weight: 800;
-  color: #ffd27a;
+  color: #ffd27a; /* اللون الذهبي للسعر */
   white-space: nowrap;
 }
 
