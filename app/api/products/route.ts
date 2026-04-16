@@ -5,134 +5,80 @@ import { sql } from "@/lib/db";
 
 // GET
 export async function GET() {
-  const products = await sql`
-    SELECT
-      id,
-      category_id,
-      name,
-      description,
-      price,
-      image_url,
-      sort_order,
-      is_best_seller,
-      is_spicy
-    FROM products
-    ORDER BY sort_order ASC, id ASC
-  `;
+  try {
+    const products = await sql`
+      SELECT id, name, price, image, category_id
+      FROM products
+      ORDER BY id DESC
+    `;
 
-  return NextResponse.json(products);
+    return NextResponse.json(products);
+  } catch (err) {
+    console.error("PRODUCTS GET ERROR:", err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Failed to fetch products" },
+      { status: 500 }
+    );
+  }
 }
 
 // POST
 export async function POST(req: Request) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
 
-  const categoryId = Number(body.category_id);
-  const name = String(body.name || "").trim();
-  const description = String(body.description || "").trim();
-  const price = Number(body.price || 0);
-  const imageUrl = String(body.image_url || "").trim();
-  const sortOrder = Number(body.sort_order || 0);
-  const isBestSeller = Boolean(body.is_best_seller);
-  const isSpicy = Boolean(body.is_spicy);
+    const name = String(body.name || "").trim();
+    const price = Number(body.price || 0);
+    const image = String(body.image || "");
+    const categoryId = Number(body.category_id || 0);
 
-  if (!categoryId || !name) {
+    if (!name || !price) {
+      return NextResponse.json(
+        { error: "Name and price are required" },
+        { status: 400 }
+      );
+    }
+
+    const result = await sql`
+      INSERT INTO products (name, price, image, category_id)
+      VALUES (${name}, ${price}, ${image}, ${categoryId})
+      RETURNING id, name, price, image, category_id
+    `;
+
+    return NextResponse.json(result[0]);
+  } catch (err) {
+    console.error("PRODUCTS POST ERROR:", err);
     return NextResponse.json(
-      { error: "category_id and name are required" },
-      { status: 400 }
+      { error: err instanceof Error ? err.message : "Failed to create product" },
+      { status: 500 }
     );
   }
-
-  const result = await sql`
-    INSERT INTO products (
-      category_id,
-      name,
-      description,
-      price,
-      image_url,
-      sort_order,
-      is_best_seller,
-      is_spicy
-    )
-    VALUES (
-      ${categoryId},
-      ${name},
-      ${description},
-      ${price},
-      ${imageUrl},
-      ${sortOrder},
-      ${isBestSeller},
-      ${isSpicy}
-    )
-    RETURNING
-      id,
-      category_id,
-      name,
-      description,
-      price,
-      image_url,
-      sort_order,
-      is_best_seller,
-      is_spicy
-  `;
-
-  return NextResponse.json(result[0]);
-}
-
-// PUT
-export async function PUT(req: Request) {
-  const body = await req.json();
-
-  const id = Number(body.id);
-  const categoryId = Number(body.category_id);
-  const name = String(body.name || "").trim();
-  const description = String(body.description || "").trim();
-  const price = Number(body.price || 0);
-  const imageUrl = String(body.image_url || "").trim();
-  const sortOrder = Number(body.sort_order || 0);
-  const isBestSeller = Boolean(body.is_best_seller);
-  const isSpicy = Boolean(body.is_spicy);
-
-  if (!id || !categoryId || !name) {
-    return NextResponse.json(
-      { error: "id, category_id and name are required" },
-      { status: 400 }
-    );
-  }
-
-  await sql`
-    UPDATE products
-    SET
-      category_id = ${categoryId},
-      name = ${name},
-      description = ${description},
-      price = ${price},
-      image_url = ${imageUrl},
-      sort_order = ${sortOrder},
-      is_best_seller = ${isBestSeller},
-      is_spicy = ${isSpicy}
-    WHERE id = ${id}
-  `;
-
-  return NextResponse.json({ success: true });
 }
 
 // DELETE
 export async function DELETE(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const id = Number(searchParams.get("id"));
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = Number(searchParams.get("id"));
 
-  if (!id) {
+    if (!id) {
+      return NextResponse.json(
+        { error: "Invalid id" },
+        { status: 400 }
+      );
+    }
+
+    await sql`
+      DELETE FROM products
+      WHERE id = ${id}
+    `;
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("PRODUCTS DELETE ERROR:", err);
     return NextResponse.json(
-      { error: "Invalid id" },
-      { status: 400 }
+      { error: err instanceof Error ? err.message : "Failed to delete product" },
+      { status: 500 }
     );
   }
-
-  await sql`
-    DELETE FROM products
-    WHERE id = ${id}
-  `;
-
-  return NextResponse.json({ success: true });
 }

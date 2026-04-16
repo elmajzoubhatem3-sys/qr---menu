@@ -5,53 +5,76 @@ import { sql } from "@/lib/db";
 
 // GET
 export async function GET() {
-  const categories = await sql`
-    SELECT id, name
-    FROM categories
-    ORDER BY id ASC
-  `;
+  try {
+    const categories = await sql`
+      SELECT id, name
+      FROM categories
+      ORDER BY id ASC
+    `;
 
-  return NextResponse.json(categories);
+    return NextResponse.json(categories);
+  } catch (err) {
+    console.error("CATEGORIES GET ERROR:", err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Failed to fetch categories" },
+      { status: 500 }
+    );
+  }
 }
 
 // POST
 export async function POST(req: Request) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
+    const name = String(body.name || "").trim();
 
-  const name = String(body.name || "").trim();
+    if (!name) {
+      return NextResponse.json(
+        { error: "Name is required" },
+        { status: 400 }
+      );
+    }
 
-  if (!name) {
+    const result = await sql`
+      INSERT INTO categories (name)
+      VALUES (${name})
+      RETURNING id, name
+    `;
+
+    return NextResponse.json(result[0]);
+  } catch (err) {
+    console.error("CATEGORIES POST ERROR:", err);
     return NextResponse.json(
-      { error: "Name is required" },
-      { status: 400 }
+      { error: err instanceof Error ? err.message : "Failed to create category" },
+      { status: 500 }
     );
   }
-
-  const result = await sql`
-    INSERT INTO categories (name)
-    VALUES (${name})
-    RETURNING id, name
-  `;
-
-  return NextResponse.json(result[0]);
 }
 
 // DELETE
 export async function DELETE(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const id = Number(searchParams.get("id"));
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = Number(searchParams.get("id"));
 
-  if (!id) {
+    if (!id) {
+      return NextResponse.json(
+        { error: "Invalid id" },
+        { status: 400 }
+      );
+    }
+
+    await sql`
+      DELETE FROM categories
+      WHERE id = ${id}
+    `;
+
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("CATEGORIES DELETE ERROR:", err);
     return NextResponse.json(
-      { error: "Invalid id" },
-      { status: 400 }
+      { error: err instanceof Error ? err.message : "Failed to delete category" },
+      { status: 500 }
     );
   }
-
-  await sql`
-    DELETE FROM categories
-    WHERE id = ${id}
-  `;
-
-  return NextResponse.json({ success: true });
 }
