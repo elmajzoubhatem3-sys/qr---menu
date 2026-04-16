@@ -118,7 +118,7 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(10px); /* تأثير الـ blur */
-  margin-bottom: 20px; /* المسافة بين الصورة والنص */
+  margin-bottom: 0px; /* المسافة بين الصورة والنص */
 }
 
 .menu-card-image {
@@ -131,7 +131,7 @@ a {
 
 .menu-card-body {
   padding: 16px;
-  margin-bottom: 10px; /* المسافة بين الاسم والسعر */
+  margin-bottom: 0px; /* المسافة بين الاسم والسعر */
 }
 
 .menu-card-body h3 {
