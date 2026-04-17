@@ -7,7 +7,7 @@ import { sql } from "@/lib/db";
 export async function GET() {
   try {
     const products = await sql`
-      SELECT id, name, price, image, category_id
+      SELECT id, name, price, image_url, category_id
       FROM products
       ORDER BY id DESC
     `;
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
     const name = String(body.name || "").trim();
     const price = Number(body.price || 0);
-    const image = String(body.image || "");
+    const imageUrl = String(body.image_url || "");
     const categoryId = Number(body.category_id || 0);
 
     if (!name || !price) {
@@ -40,9 +40,9 @@ export async function POST(req: Request) {
     }
 
     const result = await sql`
-      INSERT INTO products (name, price, image, category_id)
-      VALUES (${name}, ${price}, ${image}, ${categoryId})
-      RETURNING id, name, price, image, category_id
+      INSERT INTO products (name, price, image_url, category_id)
+      VALUES (${name}, ${price}, ${imageUrl}, ${categoryId})
+      RETURNING id, name, price, image_url, category_id
     `;
 
     return NextResponse.json(result[0]);
