@@ -90,21 +90,22 @@ a {
   overflow-x: auto;
   margin-bottom: 28px;
   padding-bottom: 6px;
+
+  background: rgba(0, 0, 0, 0.3); /* 👈 أهم شي */
 }
 
 .category-tab {
-  white-space: nowrap;
   padding: 6px 14px;
   border-radius: 999px;
 
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.12); /* أقوى */
+  border: 1px solid rgba(255, 255, 255, 0.3);
 
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
+  color: #fff;
   font-size: 13px;
-  color: #ddd;
 }
 
 .menu-section {
@@ -153,8 +154,8 @@ a {
 .menu-card-top {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
+  justify-content: flex-start;
+  gap: 4px;
 }
 
 .menu-card-top h3 {
